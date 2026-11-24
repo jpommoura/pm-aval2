@@ -1,29 +1,58 @@
-public class Van {
-    public int nPortas;
-    public boolean Inspecao; {
+package pm_prova2_m;
 
+public class Van extends Veiculo implements Avaliavel, Inspecionavel {
+
+    private int maxPassageiros;
+    private int nota;
+
+    public Van(String placa, String modelo, int anoFabricacao, double valorDiaria,
+               double quilometragem, StatusVeiculo status, int maxPassageiros) {
+        super(placa, modelo, anoFabricacao, valorDiaria, quilometragem, status);
+        this.maxPassageiros = maxPassageiros;
     }
 
-    public Van (int nPortas, boolean Inspecao) {
-
+    @Override
+    public void avaliar(int nota) {
+        if (nota < 1 || nota > 5) {
+            System.out.println("Nota inválida. Use de 1 a 5.");
+            return;
+        }
+        this.nota = nota;
+        System.out.println("Van " + getModelo() + " avaliada com nota " + nota);
     }
 
-    public abstract class Veiculo {
-    
-    private String placa;
-    private String modelo;
-    private int anoFabricacao;
-    private double valorDiaria;
-    private double quilometragem;
-    private StatusVeiculo status;
-
-    public Veiculo(String placa, String modelo, int anoFabricacao, double valorDiaria,double quilometragem, StatusVeiculo status) {
-
-        this.placa = placa;
-        this.modelo = modelo;
-        this.anoFabricacao = anoFabricacao;
-        this.valorDiaria = valorDiaria;
-        this.quilometragem = quilometragem;
-        this.status = status;
+    @Override
+    public void realizarInspecao() {
+        if (getQuilometragem() > 100000) {
+            setStatus(StatusVeiculo.MANUTENCAO);
+            System.out.println("Van " + getPlaca() + " reprovada: enviada para manutenção");
+        } else {
+            System.out.println("Van " + getPlaca() + " aprovada na inspeção");
+        }
     }
-}}
+
+    @Override
+    public boolean possuiSeguroEspecial() {
+        return maxPassageiros > 12;
+    }
+
+    @Override
+    public void exibirDetalhes() {
+        System.out.println("[Van] " + getModelo() + " | Placa: " + getPlaca() + " | Ano: " + getAnoFabricacao()
+                + " | Diária: R$ " + String.format("%.2f", getValorDiaria()) + " | Km: " + getQuilometragem()
+                + " | Máx. passageiros: " + maxPassageiros + " | Status: " + getStatus()
+                + " | Nota: " + (nota == 0 ? "sem avaliação" : nota));
+    }
+
+    public int getMaxPassageiros() {
+        return maxPassageiros;
+    }
+
+    public void setMaxPassageiros(int maxPassageiros) {
+        this.maxPassageiros = maxPassageiros;
+    }
+
+    public int getNota() {
+        return nota;
+    }
+}

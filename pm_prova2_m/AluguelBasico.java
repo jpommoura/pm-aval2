@@ -1,25 +1,26 @@
-import pm_prova2_m.Aluguel;
+package pm_prova2_m;
 
-public class AluguelBasico {
-    public int KmPorDia;
-    public boolean Seguro;
+public class AluguelBasico extends Aluguel {
 
-    public Aluguel (int KmPorDia, boolean Seguro) {
-        this.KmPorDia = KmPorDia;
-        this.Seguro = Seguro;
+    private int limiteKmPorDia = 100;
+
+    public AluguelBasico(String nomeCliente, int quantidadeDias, double valorTotal, StatusAluguel status) {
+        super(nomeCliente, quantidadeDias, valorTotal, status);
     }
 
-    public void ExibirDetalhes() {
-        if (this.Seguro == true) {
-            String possuiSeguro = "Possui o seguro";
-        }
-        else {
-            String possuiSeguro = "Não possui o seguro";
-        }
-        String texto = "Esse aluguel possui " + KmPorDia + "km por dia e " + possuiSeguro();
+    @Override
+    public boolean possuiSeguroIncluso() {
+        return false;
     }
 
-    public boolean possuiSeguro() {
-        return this.Seguro;
+    @Override
+    public void exibirDetalhes() {
+        System.out.println("=== Aluguel Básico ===");
+        System.out.println("Limite: " + limiteKmPorDia + " km por dia");
+        exibirDadosBasicos();
+    }
+
+    public int getLimiteKmPorDia() {
+        return limiteKmPorDia;
     }
 }

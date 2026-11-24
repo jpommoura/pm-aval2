@@ -1,23 +1,20 @@
-public class AluguelPremium {
-    public int KmPorDia;
-    public boolean Seguro;
+package pm_prova2_m;
 
-    public Aluguel (int KmPorDia, boolean Seguro) {
-        this.KmPorDia = KmPorDia;
-        this.Seguro = Seguro;
+public class AluguelPremium extends Aluguel {
+
+    public AluguelPremium(String nomeCliente, int quantidadeDias, double valorTotal, StatusAluguel status) {
+        super(nomeCliente, quantidadeDias, valorTotal, status);
     }
 
-    public void ExibirDetalhes() {
-        if (this.Seguro == true) {
-            String possuiSeguroExecutivo = "Possui o seguro executivo";
-        }
-        else {
-            String possuiSeguroExecutivo = "Não possui o seguro executivo";
-        }
-        String texto = "Esse aluguel possui " + KmPorDia + "km por dia e " + possuiSeguro();
+    @Override
+    public boolean possuiSeguroIncluso() {
+        return true;
     }
 
-    public boolean possuiSeguro() {
-        return this.Seguro;
+    @Override
+    public void exibirDetalhes() {
+        System.out.println("=== Aluguel Premium ===");
+        System.out.println("Quilometragem ilimitada");
+        exibirDadosBasicos();
     }
 }
